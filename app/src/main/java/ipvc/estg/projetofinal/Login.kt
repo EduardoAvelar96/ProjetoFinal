@@ -64,7 +64,7 @@ class Login : AppCompatActivity() {
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
             if(currentUser.isEmailVerified) {
-                startActivity(Intent(this, SensorLum::class.java))
+                startActivity(Intent(this, SensorHum::class.java))
                 finish()
             }else{
                 Toast.makeText(
