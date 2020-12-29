@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ProjetoFinal</string>
+    <string name="email">Insert your email</string>
+    <string name="password">Insert your password</string>
+    <string name="login">Login</string>
+    <string name="humidade">Humidity</string>
+    <string name="luminosidade">Brightness</string>
+    <string name="temperatura">Temperature</string>
+    <string name="hum_igual">Humidity =</string>
+    <string name="temp_igual">Temperature =</string>
+    <string name="lum_igual">Brightness =</string>
 </resources>

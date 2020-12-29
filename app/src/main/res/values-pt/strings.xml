@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProjetoFinal</string>
+    <string name="email">Insira o seu email</string>
+    <string name="password">Insira a sua password</string>
+    <string name="login">Entrar</string>
+    <string name="humidade">Humidade</string>
+    <string name="luminosidade">Luminosidade</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="hum_igual">"Humidade = "</string>
+    <string name="temp_igual">Temperatura =</string>
+    <string name="lum_igual">Luminosidade =</string>
+</resources>

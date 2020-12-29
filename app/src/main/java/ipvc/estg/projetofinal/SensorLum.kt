@@ -18,7 +18,7 @@ class SensorLum : Activity(), SensorEventListener {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sensorlum)
+        setContentView(R.layout.activity_lum)
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
@@ -32,15 +32,16 @@ class SensorLum : Activity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent) {
         val luz = event.values[0]
+
+        findViewById<TextView>(R.id.luminosidade1).setText(R.string.lum_igual)
+        findViewById<TextView>(R.id.luminosidade2).setText(luz.toString())
+        findViewById<TextView>(R.id.luminosidade3).setText("lx")
+
         try {
             if (luz < 20000 && !isRunning) {
                 isRunning = true
-                findViewById<TextView>(R.id.LuzNega).setText("Luz: " + luz + "lx")
-                findViewById<TextView>(R.id.LuzPosi).setText("")
 
             } else if(luz > 20000 && !isRunning){
-                findViewById<TextView>(R.id.LuzNega).setText("")
-                findViewById<TextView>(R.id.LuzPosi).setText("Luz: " + luz + "lx")
 
             }else{
                 isRunning = false

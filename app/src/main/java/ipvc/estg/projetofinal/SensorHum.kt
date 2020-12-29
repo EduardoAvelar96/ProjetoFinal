@@ -17,7 +17,7 @@ class SensorHum : Activity(), SensorEventListener {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sensorhum)
+        setContentView(R.layout.activity_hum)
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
@@ -30,16 +30,18 @@ class SensorHum : Activity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
+
         val humidity = event.values[0]
+
+        findViewById<TextView>(R.id.humidade1).setText(R.string.hum_igual)
+        findViewById<TextView>(R.id.humidade2).setText(humidity.toString())
+        findViewById<TextView>(R.id.humidade3).setText("%")
+
         try {
             if (humidity < 50 && !isRunning) {
                 isRunning = true
-                findViewById<TextView>(R.id.HumNega).setText("Humidade: " + humidity + "%")
-                findViewById<TextView>(R.id.HumPosi).setText("")
 
             } else if(humidity > 50 && !isRunning){
-                findViewById<TextView>(R.id.HumNega).setText("")
-                findViewById<TextView>(R.id.HumPosi).setText("Humidade: " + humidity + "%")
 
             }else{
                 isRunning = false

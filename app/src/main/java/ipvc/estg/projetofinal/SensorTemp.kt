@@ -17,7 +17,7 @@ class SensorTemp : Activity(), SensorEventListener {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sensortemp)
+        setContentView(R.layout.activity_temp)
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
@@ -31,15 +31,16 @@ class SensorTemp : Activity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent) {
         val temp = event.values[0]
+
+        findViewById<TextView>(R.id.humidade1).setText(R.string.temp_igual)
+        findViewById<TextView>(R.id.humidade2).setText(temp.toString())
+        findViewById<TextView>(R.id.humidade3).setText("°C")
+
         try {
             if (temp < 0 && !isRunning) {
                 isRunning = true
-                findViewById<TextView>(R.id.TempNega).setText("Temperatura: " + temp + "°C")
-                findViewById<TextView>(R.id.TempPosi).setText("")
 
             } else if(temp > 0 && !isRunning){
-                findViewById<TextView>(R.id.TempNega).setText("")
-                findViewById<TextView>(R.id.TempPosi).setText("Temperatura: " + temp + "°C")
 
             }else{
                 isRunning = false
