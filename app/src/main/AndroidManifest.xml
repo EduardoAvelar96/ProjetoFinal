@@ -11,9 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetoFinal">
-        <activity android:name=".SensorHum" />
-        <activity android:name=".SensorLum" />
-        <activity android:name=".SensorTemp" />
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainMenu"/>
+        <activity android:name=".SensorHum" android:parentActivityName="ipvc.estg.projetofinal.MainMenu"/>
+        <activity android:name=".SensorLum" android:parentActivityName="ipvc.estg.projetofinal.MainMenu"/>
+        <activity android:name=".SensorTemp" android:parentActivityName="ipvc.estg.projetofinal.MainMenu"/>
     </application>
 
 </manifest>

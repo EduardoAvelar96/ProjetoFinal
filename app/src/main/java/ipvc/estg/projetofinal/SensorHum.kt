@@ -7,9 +7,13 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
-class SensorHum : Activity(), SensorEventListener {
+class SensorHum : AppCompatActivity(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private var humidity: Sensor? = null

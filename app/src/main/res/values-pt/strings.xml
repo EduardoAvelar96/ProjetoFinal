@@ -10,4 +10,5 @@
     <string name="hum_igual">"Humidade = "</string>
     <string name="temp_igual">Temperatura =</string>
     <string name="lum_igual">Luminosidade =</string>
+    <string name="Logout">logout</string>
 </resources>

@@ -9,4 +9,5 @@
     <string name="hum_igual">Humidity =</string>
     <string name="temp_igual">Temperature =</string>
     <string name="lum_igual">Brightness =</string>
+    <string name="Logout">Logout</string>
 </resources>

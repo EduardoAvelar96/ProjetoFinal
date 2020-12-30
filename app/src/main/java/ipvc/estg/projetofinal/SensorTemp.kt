@@ -7,9 +7,13 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
-class SensorTemp : Activity(), SensorEventListener {
+class SensorTemp : AppCompatActivity(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private var temperature: Sensor? = null
@@ -32,9 +36,9 @@ class SensorTemp : Activity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent) {
         val temp = event.values[0]
 
-        findViewById<TextView>(R.id.humidade1).setText(R.string.temp_igual)
-        findViewById<TextView>(R.id.humidade2).setText(temp.toString())
-        findViewById<TextView>(R.id.humidade3).setText("°C")
+        findViewById<TextView>(R.id.temperatura1).setText(R.string.temp_igual)
+        findViewById<TextView>(R.id.temperatura2).setText(temp.toString())
+        findViewById<TextView>(R.id.temperatura3).setText("°C")
 
         try {
             if (temp < 0 && !isRunning) {
@@ -60,5 +64,10 @@ class SensorTemp : Activity(), SensorEventListener {
         // Be sure to unregister the sensor when the activity pauses.
         super.onPause()
         sensorManager.unregisterListener(this)
+    }
+
+    override fun onBackPressed() {
+
+        super.onBackPressed()
     }
 }
