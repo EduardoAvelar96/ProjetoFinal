@@ -65,9 +65,4 @@ class SensorTemp : AppCompatActivity(), SensorEventListener {
         super.onPause()
         sensorManager.unregisterListener(this)
     }
-
-    override fun onBackPressed() {
-
-        super.onBackPressed()
-    }
 }

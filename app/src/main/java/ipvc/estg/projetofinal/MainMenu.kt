@@ -26,15 +26,12 @@ class MainMenu : AppCompatActivity(){
         val button3 = findViewById<Button>(R.id.button3)
         button1.setOnClickListener {
             startActivity(Intent(this, SensorTemp::class.java))
-            finish()
         }
         button2.setOnClickListener {
             startActivity(Intent(this, SensorLum::class.java))
-            finish()
         }
         button3.setOnClickListener {
             startActivity(Intent(this, SensorHum::class.java))
-            finish()
         }
     }
 
