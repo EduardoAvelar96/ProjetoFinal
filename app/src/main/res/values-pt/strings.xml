@@ -11,4 +11,7 @@
     <string name="temp_igual">Temperatura =</string>
     <string name="lum_igual">Luminosidade =</string>
     <string name="Logout">logout</string>
+    <string name="temp_salva">Temperatura salva com sucesso</string>
+    <string name="hum_salva">Humidade salva com sucesso</string>
+    <string name="lum_salva">Luminosidade salva com sucesso</string>
 </resources>

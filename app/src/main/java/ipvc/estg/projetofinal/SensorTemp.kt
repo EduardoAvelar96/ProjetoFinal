@@ -1,17 +1,18 @@
 package ipvc.estg.projetofinal
 
-import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SensorTemp : AppCompatActivity(), SensorEventListener {
 
@@ -22,6 +23,7 @@ class SensorTemp : AppCompatActivity(), SensorEventListener {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_temp)
+
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
@@ -34,18 +36,19 @@ class SensorTemp : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        val temp = event.values[0]
+
+        val temp = event.values[0].toInt()
 
         findViewById<TextView>(R.id.temperatura1).setText(R.string.temp_igual)
         findViewById<TextView>(R.id.temperatura2).setText(temp.toString())
         findViewById<TextView>(R.id.temperatura3).setText("°C")
 
         try {
-            if (temp < 0 && !isRunning) {
+            if (temp < 0  || temp > 30 && !isRunning) {
                 isRunning = true
-
-            } else if(temp > 0 && !isRunning){
-
+                //saveTemp(temp)
+                //startActivity(Intent(this, Alerta::class.java))
+                finish()
             }else{
                 isRunning = false
             }
@@ -65,4 +68,20 @@ class SensorTemp : AppCompatActivity(), SensorEventListener {
         super.onPause()
         sensorManager.unregisterListener(this)
     }
+
+    private fun saveTemp(temp: Int) {
+
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val currentDate = sdf.format(Date())
+
+        val ref = FirebaseDatabase.getInstance().getReference("Temperatura")
+
+        val temperaturaID = ref.push().key
+        val temperatura = Temperatura(temp,currentDate)
+
+        ref.child(temperaturaID!!).setValue(temperatura).addOnCompleteListener{
+            Toast.makeText(applicationContext, R.string.temp_salva, Toast.LENGTH_LONG).show()
+        }
+    }
+
 }

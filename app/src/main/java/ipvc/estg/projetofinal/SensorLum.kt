@@ -12,7 +12,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SensorLum : AppCompatActivity(), SensorEventListener {
 
@@ -42,11 +46,11 @@ class SensorLum : AppCompatActivity(), SensorEventListener {
         findViewById<TextView>(R.id.luminosidade3).setText("lx")
 
         try {
-            if (luz < 20000 && !isRunning) {
+            if (luz < 200 && !isRunning) {
                 isRunning = true
-
-            } else if(luz > 20000 && !isRunning){
-
+                //saveLum(luz)
+                //startActivity(Intent(this, Alerta::class.java))
+                finish()
             }else{
                 isRunning = false
             }
@@ -65,5 +69,20 @@ class SensorLum : AppCompatActivity(), SensorEventListener {
         // Be sure to unregister the sensor when the activity pauses.
         super.onPause()
         sensorManager.unregisterListener(this)
+    }
+
+    private fun saveLum(luz: Int) {
+
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val currentDate = sdf.format(Date())
+
+        val ref = FirebaseDatabase.getInstance().getReference("Luminosidade")
+
+        val luminosidadeID = ref.push().key
+        val luminosidade = Luminosidade(luz,currentDate)
+
+        ref.child(luminosidadeID!!).setValue(luminosidade).addOnCompleteListener{
+            Toast.makeText(applicationContext, R.string.lum_salva, Toast.LENGTH_LONG).show()
+        }
     }
 }

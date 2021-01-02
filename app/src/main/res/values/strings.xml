@@ -10,4 +10,7 @@
     <string name="temp_igual">Temperature =</string>
     <string name="lum_igual">Brightness =</string>
     <string name="Logout">Logout</string>
+    <string name="temp_salva">Temperature saved with success</string>
+    <string name="hum_salva">Humidity saved with success</string>
+    <string name="lum_salva">Luminosity saved with success</string>
 </resources>

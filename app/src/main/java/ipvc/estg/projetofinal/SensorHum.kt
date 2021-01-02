@@ -11,7 +11,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SensorHum : AppCompatActivity(), SensorEventListener {
 
@@ -42,12 +46,12 @@ class SensorHum : AppCompatActivity(), SensorEventListener {
         findViewById<TextView>(R.id.humidade3).setText("%")
 
         try {
-            if (humidity < 50 && !isRunning) {
+            if (humidity < 30 || humidity >70 && !isRunning) {
                 isRunning = true
-
-            } else if(humidity > 50 && !isRunning){
-
-            }else{
+                //saveHum(humidity)
+                //startActivity(Intent(this, Alerta::class.java))
+                finish()
+            } else{
                 isRunning = false
             }
         } catch (e: Exception) {
@@ -65,5 +69,20 @@ class SensorHum : AppCompatActivity(), SensorEventListener {
         // Be sure to unregister the sensor when the activity pauses.
         super.onPause()
         sensorManager.unregisterListener(this)
+    }
+
+    private fun saveHum(humidity: Int) {
+
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val currentDate = sdf.format(Date())
+
+        val ref = FirebaseDatabase.getInstance().getReference("Humidade")
+
+        val humidadeID = ref.push().key
+        val humidade = Temperatura(humidity,currentDate)
+
+        ref.child(humidadeID!!).setValue(humidade).addOnCompleteListener{
+            Toast.makeText(applicationContext, R.string.temp_salva, Toast.LENGTH_LONG).show()
+        }
     }
 }
