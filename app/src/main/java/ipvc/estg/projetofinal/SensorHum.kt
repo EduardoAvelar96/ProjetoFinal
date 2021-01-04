@@ -1,6 +1,5 @@
 package ipvc.estg.projetofinal
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -8,9 +7,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -84,7 +80,7 @@ class SensorHum : AppCompatActivity(), SensorEventListener {
         val ref = FirebaseDatabase.getInstance().getReference("Humidade")
 
         val humidadeID = ref.push().key
-        val humidade = Temperatura(humidity,currentDate)
+        val humidade = CHumidade(humidity,currentDate)
 
         ref.child(humidadeID!!).setValue(humidade).addOnCompleteListener{
             Toast.makeText(applicationContext, R.string.temp_salva, Toast.LENGTH_LONG).show()

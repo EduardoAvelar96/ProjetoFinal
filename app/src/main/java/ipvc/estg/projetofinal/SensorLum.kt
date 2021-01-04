@@ -1,6 +1,5 @@
 package ipvc.estg.projetofinal
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -8,10 +7,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -84,7 +79,7 @@ class SensorLum : AppCompatActivity(), SensorEventListener {
         val ref = FirebaseDatabase.getInstance().getReference("Luminosidade")
 
         val luminosidadeID = ref.push().key
-        val luminosidade = Luminosidade(luz,currentDate)
+        val luminosidade = CLuminosidade(luz,currentDate)
 
         ref.child(luminosidadeID!!).setValue(luminosidade).addOnCompleteListener{
             Toast.makeText(applicationContext, R.string.lum_salva, Toast.LENGTH_LONG).show()

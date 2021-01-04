@@ -24,6 +24,9 @@ class MainMenu : AppCompatActivity(){
         val button1 = findViewById<Button>(R.id.button1)
         val button2 = findViewById<Button>(R.id.button2)
         val button3 = findViewById<Button>(R.id.button3)
+        val button4 = findViewById<Button>(R.id.button4)
+        val button5 = findViewById<Button>(R.id.button5)
+        val button6 = findViewById<Button>(R.id.button6)
         button1.setOnClickListener {
             startActivity(Intent(this, SensorTemp::class.java))
         }
@@ -32,6 +35,15 @@ class MainMenu : AppCompatActivity(){
         }
         button3.setOnClickListener {
             startActivity(Intent(this, SensorHum::class.java))
+        }
+        button4.setOnClickListener {
+            startActivity(Intent(this, GetTemp::class.java))
+        }
+        button5.setOnClickListener {
+            startActivity(Intent(this, GetLum::class.java))
+        }
+        button6.setOnClickListener {
+            startActivity(Intent(this, GetHum::class.java))
         }
     }
 

@@ -18,4 +18,5 @@
     <string name="condicoes">Condições atmosféricas desfavoráveis</string>
     <string name="confirmar">Confirmar</string>
     <string name="ler_dados">Valores de alerta</string>
+    <string name="sair">Sair</string>
 </resources>

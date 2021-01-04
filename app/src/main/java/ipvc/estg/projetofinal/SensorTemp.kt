@@ -74,13 +74,13 @@ class SensorTemp : AppCompatActivity(), SensorEventListener {
 
     private fun saveTemp(temp: Int) {
 
+        var ref = FirebaseDatabase.getInstance().getReference("Temperatura")
+
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         val currentDate = sdf.format(Date())
 
-        val ref = FirebaseDatabase.getInstance().getReference("Temperatura")
-
         val temperaturaID = ref.push().key
-        val temperatura = Temperatura(temp,currentDate)
+        val temperatura = CTemperatura(temp,currentDate)
 
         ref.child(temperaturaID!!).setValue(temperatura).addOnCompleteListener{
             Toast.makeText(applicationContext, R.string.temp_salva, Toast.LENGTH_LONG).show()
