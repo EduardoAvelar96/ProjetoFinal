@@ -14,4 +14,8 @@
     <string name="temp_salva">Temperatura salva com sucesso</string>
     <string name="hum_salva">Humidade salva com sucesso</string>
     <string name="lum_salva">Luminosidade salva com sucesso</string>
+    <string name="alerta">ALERTA</string>
+    <string name="condicoes">Condições atmosféricas desfavoráveis</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="ler_dados">Valores de alerta</string>
 </resources>

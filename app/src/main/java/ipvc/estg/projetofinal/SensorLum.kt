@@ -2,6 +2,7 @@ package ipvc.estg.projetofinal
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -24,6 +25,8 @@ class SensorLum : AppCompatActivity(), SensorEventListener {
     private var luz: Sensor? = null
     var isRunning = false
 
+    var ultimoVal = -500
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lum)
@@ -39,18 +42,20 @@ class SensorLum : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        val luz = event.values[0]
+        val luz = event.values[0].toInt()
 
         findViewById<TextView>(R.id.luminosidade1).setText(R.string.lum_igual)
         findViewById<TextView>(R.id.luminosidade2).setText(luz.toString())
         findViewById<TextView>(R.id.luminosidade3).setText("lx")
 
         try {
-            if (luz < 200 && !isRunning) {
+            if (luz < 300 && !isRunning) {
+                if(ultimoVal != luz){
+                    saveLum(luz)
+                }
+                ultimoVal = luz
                 isRunning = true
-                //saveLum(luz)
-                //startActivity(Intent(this, Alerta::class.java))
-                finish()
+                startActivity(Intent(this, Alerta::class.java))
             }else{
                 isRunning = false
             }

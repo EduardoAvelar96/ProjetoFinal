@@ -2,6 +2,7 @@ package ipvc.estg.projetofinal
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -23,6 +24,8 @@ class SensorHum : AppCompatActivity(), SensorEventListener {
     private var humidity: Sensor? = null
     var isRunning = false
 
+    var ultimoVal = -500
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hum)
@@ -39,18 +42,20 @@ class SensorHum : AppCompatActivity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent) {
 
-        val humidity = event.values[0]
+        val humidity = event.values[0].toInt()
 
         findViewById<TextView>(R.id.humidade1).setText(R.string.hum_igual)
         findViewById<TextView>(R.id.humidade2).setText(humidity.toString())
         findViewById<TextView>(R.id.humidade3).setText("%")
 
         try {
-            if (humidity < 30 || humidity >70 && !isRunning) {
+            if (humidity < 30 || humidity > 70 && !isRunning) {
+                if(ultimoVal != humidity){
+                    saveHum(humidity)
+                }
+                ultimoVal = humidity
                 isRunning = true
-                //saveHum(humidity)
-                //startActivity(Intent(this, Alerta::class.java))
-                finish()
+                startActivity(Intent(this, Alerta::class.java))
             } else{
                 isRunning = false
             }

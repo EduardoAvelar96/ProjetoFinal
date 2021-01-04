@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenu"/>
+        <activity android:name=".Alerta"/>
         <activity android:name=".SensorHum" android:parentActivityName="ipvc.estg.projetofinal.MainMenu"/>
         <activity android:name=".SensorLum" android:parentActivityName="ipvc.estg.projetofinal.MainMenu"/>
         <activity android:name=".SensorTemp" android:parentActivityName="ipvc.estg.projetofinal.MainMenu"/>

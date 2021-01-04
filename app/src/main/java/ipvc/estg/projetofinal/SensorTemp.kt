@@ -20,10 +20,11 @@ class SensorTemp : AppCompatActivity(), SensorEventListener {
     private var temperature: Sensor? = null
     var isRunning = false
 
+    var ultimoVal = -500
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_temp)
-
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
@@ -45,10 +46,12 @@ class SensorTemp : AppCompatActivity(), SensorEventListener {
 
         try {
             if (temp < 0  || temp > 30 && !isRunning) {
+                if(ultimoVal != temp){
+                    saveTemp(temp)
+                }
+                ultimoVal = temp
                 isRunning = true
-                //saveTemp(temp)
-                //startActivity(Intent(this, Alerta::class.java))
-                finish()
+                startActivity(Intent(this, Alerta::class.java))
             }else{
                 isRunning = false
             }

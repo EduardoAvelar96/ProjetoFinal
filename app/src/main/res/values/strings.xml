@@ -13,4 +13,8 @@
     <string name="temp_salva">Temperature saved with success</string>
     <string name="hum_salva">Humidity saved with success</string>
     <string name="lum_salva">Luminosity saved with success</string>
+    <string name="alerta">ALERT</string>
+    <string name="condicoes">Unfavorable weather conditions</string>
+    <string name="confirmar">Confirm</string>
+    <string name="ler_dados">Alert values</string>
 </resources>
