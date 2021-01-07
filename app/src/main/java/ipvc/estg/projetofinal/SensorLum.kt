@@ -19,7 +19,7 @@ class SensorLum : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private var luz: Sensor? = null
     var isRunning = false
-
+    //teste
     var ultimoVal = -500
 
     public override fun onCreate(savedInstanceState: Bundle?) {
