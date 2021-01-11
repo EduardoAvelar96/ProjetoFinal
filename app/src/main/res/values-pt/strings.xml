@@ -19,4 +19,9 @@
     <string name="confirmar">Confirmar</string>
     <string name="ler_dados">Valores de alerta</string>
     <string name="sair">Sair</string>
+    <string name="valor">Valor :</string>
+    <string name="horas">Horas :</string>
+    <string name="email_valid">Insira um email válido</string>
+    <string name="login_fail">Falha no login</string>
+    <string name="email_ver">Porfavor verifique o seu endereço de email</string>
 </resources>

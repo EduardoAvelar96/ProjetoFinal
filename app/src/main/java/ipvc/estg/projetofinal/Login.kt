@@ -27,19 +27,19 @@ class Login : AppCompatActivity() {
 
     private fun doLogin() {
         if (username.text.toString().isEmpty()) {
-            username.error = "Please enter email"
+            username.error = getString(R.string.email)
             username.requestFocus()
             return
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(username.text.toString()).matches()) {
-            username.error = "Please enter valid email"
+            username.error = getString(R.string.email_valid)
             username.requestFocus()
             return
         }
 
         if (password.text.toString().isEmpty()) {
-            password.error = "Please enter password"
+            password.error = getString(R.string.password)
             password.requestFocus()
             return
         }
@@ -64,17 +64,17 @@ class Login : AppCompatActivity() {
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
             if(currentUser.isEmailVerified) {
-                startActivity(Intent(this, MainMenu::class.java))
+                startActivity(Intent(this, Menu::class.java))
                 finish()
             }else{
                 Toast.makeText(
-                    baseContext, "Please verify your email address.",
+                    baseContext, R.string.email_ver,
                     Toast.LENGTH_SHORT
                 ).show()
             }
         } else {
             Toast.makeText(
-                baseContext, "Login failed.",
+                baseContext, R.string.login_fail,
                 Toast.LENGTH_SHORT
             ).show()
         }

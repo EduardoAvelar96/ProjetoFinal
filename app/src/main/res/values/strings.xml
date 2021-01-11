@@ -1,4 +1,13 @@
 <resources>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
     <string name="app_name">ProjetoFinal</string>
     <string name="email">Insert your email</string>
     <string name="password">Insert your password</string>
@@ -18,13 +27,9 @@
     <string name="confirmar">Confirm</string>
     <string name="ler_dados">Alert values</string>
     <string name="sair">Exit</string>
-    <string name="title_activity_main">MainActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="valor">Value :</string>
+    <string name="horas">Time :</string>
+    <string name="email_valid">Insert a valid email</string>
+    <string name="email_ver">Please verify your email address</string>
+    <string name="login_fail">Login Failed</string>
 </resources>

@@ -18,20 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMenu" />
+        <activity android:name=".Menu" />
         <activity android:name=".Alerta" />
-        <activity android:name=".GetTemp" android:parentActivityName=".MainMenu"/>
-        <activity android:name=".GetHum" android:parentActivityName=".MainMenu"/>
-        <activity android:name=".GetLum" android:parentActivityName=".MainMenu"/>
-        <activity
-            android:name=".SensorHum"
-            android:parentActivityName=".MainMenu" />
-        <activity
-            android:name=".SensorLum"
-            android:parentActivityName=".MainMenu" />
-        <activity
-            android:name=".SensorTemp"
-            android:parentActivityName=".MainMenu" />
+        <activity android:name=".GetTemp" android:parentActivityName=".Menu"/>
+        <activity android:name=".GetHum" android:parentActivityName=".Menu"/>
+        <activity android:name=".GetLum" android:parentActivityName=".Menu"/>
     </application>
 
 </manifest>

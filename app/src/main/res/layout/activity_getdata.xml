@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/purple_700"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:context=".GetData">
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
