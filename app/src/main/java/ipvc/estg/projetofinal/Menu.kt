@@ -29,6 +29,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
     private var temperature: Sensor? = null
     var isRunning = false
 
+    //
     var ultimoVal = -500
 
     public override fun onCreate(savedInstanceState: Bundle?) {
