@@ -32,4 +32,6 @@
     <string name="email_valid">Insert a valid email</string>
     <string name="email_ver">Please verify your email address</string>
     <string name="login_fail">Login Failed</string>
+    <string name="login_independent">Login as sensor</string>
+    <string name="login_dependent">Login as caretaker</string>
 </resources>

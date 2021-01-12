@@ -24,4 +24,6 @@
     <string name="email_valid">Insira um email válido</string>
     <string name="login_fail">Falha no login</string>
     <string name="email_ver">Porfavor verifique o seu endereço de email</string>
+    <string name="login_independent">Logar como sensor</string>
+    <string name="login_dependent">Logar como cuidador</string>
 </resources>

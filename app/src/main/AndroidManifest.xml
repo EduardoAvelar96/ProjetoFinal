@@ -23,6 +23,7 @@
         <activity android:name=".GetTemp" android:parentActivityName=".Menu"/>
         <activity android:name=".GetHum" android:parentActivityName=".Menu"/>
         <activity android:name=".GetLum" android:parentActivityName=".Menu"/>
+        <activity android:name=".Menuresp" />
     </application>
 
 </manifest>

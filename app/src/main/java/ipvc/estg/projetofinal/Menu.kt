@@ -29,7 +29,6 @@ class Menu : AppCompatActivity(), SensorEventListener {
     private var temperature: Sensor? = null
     var isRunning = false
 
-    //
     var ultimoVal = -500
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +67,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent) {
 
         when (event.sensor.type) {
+
             Sensor.TYPE_RELATIVE_HUMIDITY -> {
                 val humidity = event.values[0].toInt()
                 val string = getString(R.string.hum_igual)
@@ -81,10 +81,12 @@ class Menu : AppCompatActivity(), SensorEventListener {
                     if (humidity < 30 || humidity > 70 && !isRunning) {
                         if (ultimoVal != humidity) {
                             saveHum(humidity)
+                            startActivity(Intent(this, Alerta::class.java))
+                            isRunning = true
                         }
                         ultimoVal = humidity
-                        isRunning = true
-                        startActivity(Intent(this, Alerta::class.java))
+                        //isRunning = true
+                        //startActivity(Intent(this, Alerta::class.java))
                     } else {
                         isRunning = false
                     }
@@ -105,10 +107,12 @@ class Menu : AppCompatActivity(), SensorEventListener {
                     if (temp < 0 || temp > 30 && !isRunning) {
                         if (ultimoVal != temp) {
                             saveTemp(temp)
+                            startActivity(Intent(this, Alerta::class.java))
+                            isRunning = true
                         }
                         ultimoVal = temp
-                        isRunning = true
-                        startActivity(Intent(this, Alerta::class.java))
+                        //isRunning = true
+                        //startActivity(Intent(this, Alerta::class.java))
                     } else {
                         isRunning = false
                     }
@@ -129,10 +133,12 @@ class Menu : AppCompatActivity(), SensorEventListener {
                     if (luz < 300 && !isRunning) {
                         if (ultimoVal != luz) {
                             saveLum(luz)
+                            startActivity(Intent(this, Alerta::class.java))
+                            isRunning = true
                         }
                         ultimoVal = luz
-                        isRunning = true
-                        startActivity(Intent(this, Alerta::class.java))
+                        //isRunning = true
+                        //startActivity(Intent(this, Alerta::class.java))
                     } else {
                         isRunning = false
                     }
@@ -155,7 +161,8 @@ class Menu : AppCompatActivity(), SensorEventListener {
     override fun onPause() {
         // Be sure to unregister the sensor when the activity pauses.
         super.onPause()
-        sensorManager.unregisterListener(this)
+
+
     }
 
     private fun saveHum(humidity: Int) {
@@ -169,7 +176,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
         val humidade = CHumidade(humidity, currentDate)
 
         ref.child(humidadeID!!).setValue(humidade).addOnCompleteListener {
-            Toast.makeText(applicationContext, R.string.temp_salva, Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, R.string.hum_salva, Toast.LENGTH_LONG).show()
         }
     }
 
