@@ -6,8 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import ipvc.estg.projetofinal.adapter.AdapterTemp
+import ipvc.estg.projetofinal.notification.NotificationData
+import ipvc.estg.projetofinal.notification.PushNotification
+import ipvc.estg.projetofinal.notification.RetrofitInstance
 import kotlinx.android.synthetic.main.activity_getdata.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class GetTemp : AppCompatActivity() {
 

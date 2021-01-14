@@ -7,6 +7,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -16,18 +17,33 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
+import ipvc.estg.projetofinal.notification.FirebaseService
+import ipvc.estg.projetofinal.notification.NotificationData
+import ipvc.estg.projetofinal.notification.PushNotification
+import ipvc.estg.projetofinal.notification.RetrofitInstance
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+
+const val TOPIC = "/topics/myTopic"
 
 class Menu : AppCompatActivity(), SensorEventListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var sensorManager: SensorManager
-    private var all: Sensor? = null
     private var humidity: Sensor? = null
     private var luz: Sensor? = null
     private var temperature: Sensor? = null
     var isRunning = false
+
+    val TAG = "Menu"
+    val title = "ALERTA"
+    val message = "Condições atmosféricas não favoráveis"
 
     var ultimoVal = -500
 
@@ -37,6 +53,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
 
         auth = FirebaseAuth.getInstance()
 
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -81,6 +98,12 @@ class Menu : AppCompatActivity(), SensorEventListener {
                     if (humidity < 30 || humidity > 70 && !isRunning) {
                         if (ultimoVal != humidity) {
                             saveHum(humidity)
+                            PushNotification(
+                                    NotificationData(title, message),
+                                    TOPIC
+                            ).also{
+                                sendNotification(it)
+                            }
                             startActivity(Intent(this, Alerta::class.java))
                             isRunning = true
                         }
@@ -107,6 +130,12 @@ class Menu : AppCompatActivity(), SensorEventListener {
                     if (temp < 0 || temp > 30 && !isRunning) {
                         if (ultimoVal != temp) {
                             saveTemp(temp)
+                            PushNotification(
+                                    NotificationData(title, message),
+                                    TOPIC
+                            ).also{
+                                sendNotification(it)
+                            }
                             startActivity(Intent(this, Alerta::class.java))
                             isRunning = true
                         }
@@ -133,6 +162,12 @@ class Menu : AppCompatActivity(), SensorEventListener {
                     if (luz < 300 && !isRunning) {
                         if (ultimoVal != luz) {
                             saveLum(luz)
+                            PushNotification(
+                                    NotificationData(title, message),
+                                    TOPIC
+                            ).also{
+                                sendNotification(it)
+                            }
                             startActivity(Intent(this, Alerta::class.java))
                             isRunning = true
                         }
@@ -197,6 +232,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
 
     private fun saveTemp(temp: Int) {
 
+
         var ref = FirebaseDatabase.getInstance().getReference("Temperatura")
 
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
@@ -227,6 +263,18 @@ class Menu : AppCompatActivity(), SensorEventListener {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch{
+        try{
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful){
+                Log.d(TAG, "Response: ${Gson().toJson(response)}")
+            }else{
+                Log.e(TAG, response.errorBody().toString())
+            }
+        }catch (e: java.lang.Exception){
+            Log.e(TAG, e.toString())
         }
     }
 }

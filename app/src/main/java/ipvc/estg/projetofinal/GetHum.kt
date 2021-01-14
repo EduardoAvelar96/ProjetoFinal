@@ -18,6 +18,8 @@ class GetHum : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_getdata)
 
+        
+
         database = FirebaseDatabase.getInstance()
         reference = database.getReference("Humidade")
 
