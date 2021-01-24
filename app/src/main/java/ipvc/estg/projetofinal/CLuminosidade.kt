@@ -1,3 +1,3 @@
 package ipvc.estg.projetofinal
 
-class CLuminosidade (val luminosidade: Int = 0, val horas: String = "")
+class CLuminosidade (val luminosidade: Int = 0, val horas: String = "", val id: String = "")

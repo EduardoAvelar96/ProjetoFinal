@@ -2,6 +2,7 @@ package ipvc.estg.projetofinal
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -14,7 +15,9 @@ import android.widget.Button
 
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 
+val TOPIC2 = "/topics/".plus(uid.subSequence(0,5))
 
 class Menuresp : AppCompatActivity(){
 
@@ -25,6 +28,8 @@ class Menuresp : AppCompatActivity(){
         setContentView(R.layout.activity_menuresp)
 
         auth = FirebaseAuth.getInstance()
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC2)
 
         val button4 = findViewById<Button>(R.id.button4)
         val button5 = findViewById<Button>(R.id.button5)

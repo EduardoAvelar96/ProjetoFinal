@@ -1,5 +1,7 @@
 package ipvc.estg.projetofinal
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +20,6 @@ class GetHum : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_getdata)
 
-        
 
         database = FirebaseDatabase.getInstance()
         reference = database.getReference("Humidade")
@@ -27,16 +28,22 @@ class GetHum : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         getData()
-
     }
 
     private fun getData(){
+
+        //Chama o sharedPref
+        val sharedPref: SharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE )
+        val id = sharedPref.getString(getString(R.string.id_login), "")
+
         reference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var list = ArrayList<CHumidade>()
                 for(data in snapshot.children){
                     var model = data.getValue((CHumidade::class.java))
-                    list.add(model as CHumidade)
+                    if(model!!.id == id) {
+                        list.add(model as CHumidade)
+                    }
                 }
                 if(list.size > 0){
                     var adapter = AdapterHum(list)

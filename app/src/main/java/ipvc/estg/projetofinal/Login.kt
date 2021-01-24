@@ -1,6 +1,8 @@
 package ipvc.estg.projetofinal
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -10,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
+
+var uid = ""
 
 class Login : AppCompatActivity() {
 
@@ -56,15 +61,13 @@ class Login : AppCompatActivity() {
         auth.signInWithEmailAndPassword(username.text.toString(), password.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
+                    var user = auth.currentUser
                     updateUI(user,valor)
                 } else {
                     updateUI(null,valor)
                 }
             }
     }
-
-
 
     public override fun onStart() {
         super.onStart()
@@ -73,8 +76,27 @@ class Login : AppCompatActivity() {
     }
 
     private fun updateUI(currentUser: FirebaseUser?,valor : Int) {
+
+        val user = auth.currentUser
+        user?.let {
+            for (profile in it.providerData) {
+                // UID specific to the provider
+                uid = profile.uid
+            }
+        }
+
+        val sharedPref: SharedPreferences = getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        )
+
+        with ( sharedPref.edit() ) {
+            putString(getString(R.string.id_login), uid)
+            commit()
+        }
+
+        println(currentUser)
         if (currentUser != null) {
-            if(currentUser.isEmailVerified) {
                 if(valor == 1){
                     startActivity(Intent(this, Menuresp::class.java))
                     finish()
@@ -82,12 +104,6 @@ class Login : AppCompatActivity() {
                     startActivity(Intent(this, Menu::class.java))
                     finish()
                 }
-            }else{
-                Toast.makeText(
-                    baseContext, R.string.email_ver,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         } else {
             Toast.makeText(
                 baseContext, R.string.login_fail,

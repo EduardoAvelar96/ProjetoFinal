@@ -2,6 +2,7 @@ package ipvc.estg.projetofinal
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -15,6 +16,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.toHalf
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
@@ -30,7 +32,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val TOPIC = "/topics/myTopic"
+val TOPIC = "/topics/".plus(uid.subSequence(0,5))
 
 class Menu : AppCompatActivity(), SensorEventListener {
 
@@ -53,6 +55,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
 
         auth = FirebaseAuth.getInstance()
 
+        println(TOPIC)
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -97,19 +100,17 @@ class Menu : AppCompatActivity(), SensorEventListener {
                 try {
                     if (humidity < 30 || humidity > 70 && !isRunning) {
                         if (ultimoVal != humidity) {
+                            ultimoVal = humidity
                             saveHum(humidity)
+                            startActivity(Intent(this, Alerta::class.java))
+                            isRunning = true
                             PushNotification(
                                     NotificationData(title, message),
                                     TOPIC
                             ).also{
                                 sendNotification(it)
                             }
-                            startActivity(Intent(this, Alerta::class.java))
-                            isRunning = true
                         }
-                        ultimoVal = humidity
-                        //isRunning = true
-                        //startActivity(Intent(this, Alerta::class.java))
                     } else {
                         isRunning = false
                     }
@@ -129,19 +130,17 @@ class Menu : AppCompatActivity(), SensorEventListener {
                 try {
                     if (temp < 0 || temp > 30 && !isRunning) {
                         if (ultimoVal != temp) {
+                            ultimoVal = temp
                             saveTemp(temp)
+                            startActivity(Intent(this, Alerta::class.java))
+                            isRunning = true
                             PushNotification(
                                     NotificationData(title, message),
                                     TOPIC
                             ).also{
                                 sendNotification(it)
                             }
-                            startActivity(Intent(this, Alerta::class.java))
-                            isRunning = true
                         }
-                        ultimoVal = temp
-                        //isRunning = true
-                        //startActivity(Intent(this, Alerta::class.java))
                     } else {
                         isRunning = false
                     }
@@ -161,19 +160,17 @@ class Menu : AppCompatActivity(), SensorEventListener {
                 try {
                     if (luz < 300 && !isRunning) {
                         if (ultimoVal != luz) {
+                            ultimoVal = luz
                             saveLum(luz)
+                            startActivity(Intent(this, Alerta::class.java))
+                            isRunning = true
                             PushNotification(
                                     NotificationData(title, message),
                                     TOPIC
                             ).also{
                                 sendNotification(it)
                             }
-                            startActivity(Intent(this, Alerta::class.java))
-                            isRunning = true
                         }
-                        ultimoVal = luz
-                        //isRunning = true
-                        //startActivity(Intent(this, Alerta::class.java))
                     } else {
                         isRunning = false
                     }
@@ -202,13 +199,18 @@ class Menu : AppCompatActivity(), SensorEventListener {
 
     private fun saveHum(humidity: Int) {
 
+        //Chama o sharedPref
+        val sharedPref: SharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE )
+        val id = sharedPref.getString(getString(R.string.id_login), "")
+
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         val currentDate = sdf.format(Date())
 
         val ref = FirebaseDatabase.getInstance().getReference("Humidade")
 
         val humidadeID = ref.push().key
-        val humidade = CHumidade(humidity, currentDate)
+        val humidade = CHumidade(humidity, currentDate,id!!)
+
 
         ref.child(humidadeID!!).setValue(humidade).addOnCompleteListener {
             Toast.makeText(applicationContext, R.string.hum_salva, Toast.LENGTH_LONG).show()
@@ -217,13 +219,17 @@ class Menu : AppCompatActivity(), SensorEventListener {
 
     private fun saveLum(luz: Int) {
 
+        //Chama o sharedPref
+        val sharedPref: SharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE )
+        val id = sharedPref.getString(getString(R.string.id_login), "")
+
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         val currentDate = sdf.format(Date())
 
         val ref = FirebaseDatabase.getInstance().getReference("Luminosidade")
 
         val luminosidadeID = ref.push().key
-        val luminosidade = CLuminosidade(luz, currentDate)
+        val luminosidade = CLuminosidade(luz, currentDate,id!!)
 
         ref.child(luminosidadeID!!).setValue(luminosidade).addOnCompleteListener {
             Toast.makeText(applicationContext, R.string.lum_salva, Toast.LENGTH_LONG).show()
@@ -232,6 +238,9 @@ class Menu : AppCompatActivity(), SensorEventListener {
 
     private fun saveTemp(temp: Int) {
 
+        //Chama o sharedPref
+        val sharedPref: SharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE )
+        val id = sharedPref.getString(getString(R.string.id_login), "")
 
         var ref = FirebaseDatabase.getInstance().getReference("Temperatura")
 
@@ -239,7 +248,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
         val currentDate = sdf.format(Date())
 
         val temperaturaID = ref.push().key
-        val temperatura = CTemperatura(temp, currentDate)
+        val temperatura = CTemperatura(temp, currentDate,id!!)
 
         ref.child(temperaturaID!!).setValue(temperatura).addOnCompleteListener {
             Toast.makeText(applicationContext, R.string.temp_salva, Toast.LENGTH_LONG).show()
@@ -267,7 +276,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
     }
     private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch{
         try{
-            val response = RetrofitInstance.api.postNotification(notification)
+            val response = RetrofitInstance.api!!.postNotification(notification)
             if(response.isSuccessful){
                 Log.d(TAG, "Response: ${Gson().toJson(response)}")
             }else{

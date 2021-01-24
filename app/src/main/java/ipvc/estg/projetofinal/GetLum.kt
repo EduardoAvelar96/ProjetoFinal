@@ -1,5 +1,7 @@
 package ipvc.estg.projetofinal
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -31,10 +33,16 @@ class GetLum : AppCompatActivity() {
     private fun getData(){
         reference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                //Chama o sharedPref
+                val sharedPref: SharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE )
+                val id = sharedPref.getString(getString(R.string.id_login), "")
+
                 var list = ArrayList<CLuminosidade>()
                 for(data in snapshot.children){
                     var model = data.getValue((CLuminosidade::class.java))
-                    list.add(model as CLuminosidade)
+                    if(model!!.id == id) {
+                        list.add(model as CLuminosidade)
+                    }
                 }
                 if(list.size > 0){
                     var adapter = AdapterLum(list)
