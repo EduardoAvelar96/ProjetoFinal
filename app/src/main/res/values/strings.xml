@@ -37,4 +37,6 @@
     <string name="login_fail">Login Failed</string>
     <string name="login_independent">Login as sensor</string>
     <string name="login_dependent">Login as caretaker</string>
+    <string name="register">Register</string>
+    <string name="register_error">Error. Try again later.</string>
 </resources>

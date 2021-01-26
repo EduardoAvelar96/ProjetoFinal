@@ -14,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.password
+import kotlinx.android.synthetic.main.activity_login.username
+import kotlinx.android.synthetic.main.activity_signup.*
 
 var uid = ""
 
@@ -34,6 +37,11 @@ class Login : AppCompatActivity() {
         }
 
         button_login2.setOnClickListener {
+            valor = 2
+            doLogin(valor)
+        }
+
+        button_register1.setOnClickListener {
             valor = 2
             doLogin(valor)
         }

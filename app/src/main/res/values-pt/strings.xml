@@ -26,4 +26,6 @@
     <string name="email_ver">Porfavor verifique o seu endereço de email</string>
     <string name="login_independent">Logar como sensor</string>
     <string name="login_dependent">Logar como cuidador</string>
+    <string name="register">Registar</string>
+    <string name="register_error">Erro. Tente novamente mais tarde.</string>
 </resources>
