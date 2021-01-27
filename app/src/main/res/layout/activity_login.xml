@@ -52,20 +52,18 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/button_register1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/teal_200"
+            android:padding="16dp"
+            android:text="@string/register"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_register1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="611dp"
-        android:layout_marginBottom="53dp"
-        android:background="@color/teal_200"
-        android:padding="16dp"
-        android:text="@string/register"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
 </RelativeLayout>

@@ -42,8 +42,7 @@ class Login : AppCompatActivity() {
         }
 
         button_register1.setOnClickListener {
-            valor = 2
-            doLogin(valor)
+            startActivity(Intent(this, SignUp::class.java))
         }
     }
 

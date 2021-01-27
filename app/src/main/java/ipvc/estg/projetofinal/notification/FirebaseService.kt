@@ -15,7 +15,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import ipvc.estg.projetofinal.Login
 import ipvc.estg.projetofinal.Menu
+import ipvc.estg.projetofinal.Menuresp
 import ipvc.estg.projetofinal.R
 import kotlin.random.Random
 
@@ -23,10 +25,15 @@ private const val CHANNEL_ID = "my_channel"
 
 class FirebaseService: FirebaseMessagingService() {
 
+
+    override fun onNewToken(newToken: String) {
+        super.onNewToken(newToken)
+    }
+
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        val intent = Intent(this, Menu::class.java)
+        val intent = Intent(this, Login::class.java)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
@@ -57,5 +64,4 @@ class FirebaseService: FirebaseMessagingService() {
         }
         notificationManager.createNotificationChannel(channel)
     }
-
 }

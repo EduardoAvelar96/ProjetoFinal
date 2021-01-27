@@ -20,7 +20,6 @@ class SignUp : AppCompatActivity() {
         button_register.setOnClickListener {
             signUpUser()
         }
-
     }
 
     private fun signUpUser() {
@@ -45,7 +44,7 @@ class SignUp : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(username.text.toString(), password.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        startActivity(Intent(this,Login::class.java))
+
                         finish()
                     } else {
                         Toast.makeText(baseContext, R.string.register_error,

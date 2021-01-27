@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 
-val TOPIC2 = "/topics/".plus(uid.subSequence(0,5))
+//val TOPIC2 = "/topics/myTopic" //.plus(uid.subSequence(0,5))
 
 class Menuresp : AppCompatActivity(){
 
@@ -29,7 +29,7 @@ class Menuresp : AppCompatActivity(){
 
         auth = FirebaseAuth.getInstance()
 
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC2)
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         val button4 = findViewById<Button>(R.id.button4)
         val button5 = findViewById<Button>(R.id.button5)

@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-val TOPIC = "/topics/".plus(uid.subSequence(0,5))
+const val TOPIC = "/topics/myTopic" //.plus(uid.subSequence(0,5))
 
 class Menu : AppCompatActivity(), SensorEventListener {
 
@@ -54,9 +54,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
         setContentView(R.layout.activity_menu)
 
         auth = FirebaseAuth.getInstance()
-
-        println(TOPIC)
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+        //FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -193,8 +191,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
     override fun onPause() {
         // Be sure to unregister the sensor when the activity pauses.
         super.onPause()
-
-
+        sensorManager.unregisterListener(this)
     }
 
     private fun saveHum(humidity: Int) {
