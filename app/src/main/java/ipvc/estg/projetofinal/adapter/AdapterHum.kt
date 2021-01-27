@@ -8,6 +8,7 @@ import ipvc.estg.projetofinal.CHumidade
 import ipvc.estg.projetofinal.R
 import kotlinx.android.synthetic.main.activity_recycler.view.*
 
+// Usado para adicionar dados na nossa recyclerview
 class AdapterHum(var list:ArrayList<CHumidade>) : RecyclerView.Adapter<AdapterHum.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

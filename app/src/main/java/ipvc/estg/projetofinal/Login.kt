@@ -24,11 +24,13 @@ class Login : AppCompatActivity() {
 
     var valor = 0
 
+    //Adicionamos o FirebaseAuthentication SDK á nossa app
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         auth = FirebaseAuth.getInstance()
 
         button_login.setOnClickListener{
@@ -102,7 +104,6 @@ class Login : AppCompatActivity() {
             commit()
         }
 
-        println(currentUser)
         if (currentUser != null) {
                 if(valor == 1){
                     startActivity(Intent(this, Menuresp::class.java))

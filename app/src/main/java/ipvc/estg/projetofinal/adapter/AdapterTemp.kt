@@ -8,6 +8,7 @@ import ipvc.estg.projetofinal.CTemperatura
 import ipvc.estg.projetofinal.R
 import kotlinx.android.synthetic.main.activity_recycler.view.*
 
+// Usado para adicionar dados na nossa recyclerview
 class AdapterTemp(var list:ArrayList<CTemperatura>) : RecyclerView.Adapter<AdapterTemp.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

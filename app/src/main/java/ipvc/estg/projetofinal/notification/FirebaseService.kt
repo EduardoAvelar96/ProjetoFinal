@@ -15,25 +15,24 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import ipvc.estg.projetofinal.Login
-import ipvc.estg.projetofinal.Menu
-import ipvc.estg.projetofinal.Menuresp
-import ipvc.estg.projetofinal.R
+import ipvc.estg.projetofinal.*
 import kotlin.random.Random
 
 private const val CHANNEL_ID = "my_channel"
 
+//Serviço para receber as notificações
 class FirebaseService: FirebaseMessagingService() {
 
-
+    //Token gerado para cada sessão
     override fun onNewToken(newToken: String) {
         super.onNewToken(newToken)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
+        //Quando recebe a notificação para o tópico definido
         super.onMessageReceived(message)
 
-        val intent = Intent(this, Login::class.java)
+        val intent = Intent(this, Alerta::class.java)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
@@ -41,8 +40,10 @@ class FirebaseService: FirebaseMessagingService() {
             createNotificationchannel(notificationManager)
         }
 
+        //Quando se clica na notificação o pendingIntent serve para não permitir a abertura de outra atividade com outro clique
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this,0,intent,FLAG_ONE_SHOT)
+        //Builder da notificação em si
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(message.data["title"])
                 .setContentText(message.data["message"])
@@ -51,9 +52,11 @@ class FirebaseService: FirebaseMessagingService() {
                 .setContentIntent(pendingIntent)
                 .build()
 
+        //Display da notificação
         notificationManager.notify(notificationID,notification)
     }
 
+    //Criação do canal para as nossas notificações
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationchannel(notificationManager: NotificationManager){
         val channelName = "channelName"

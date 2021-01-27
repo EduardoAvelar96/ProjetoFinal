@@ -43,6 +43,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
     private var temperature: Sensor? = null
     var isRunning = false
 
+    //var de notificaçoes
     val TAG = "Menu"
     val title = "ALERTA"
     val message = "Condições atmosféricas não favoráveis"
@@ -52,6 +53,7 @@ class Menu : AppCompatActivity(), SensorEventListener {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
 
         auth = FirebaseAuth.getInstance()
         //FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
@@ -76,7 +78,6 @@ class Menu : AppCompatActivity(), SensorEventListener {
             startActivity(Intent(this, GetHum::class.java))
         }
     }
-
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
         // Do something here if sensor accuracy changes.
@@ -185,12 +186,12 @@ class Menu : AppCompatActivity(), SensorEventListener {
         sensorManager.registerListener(this, this.humidity, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager.registerListener(this, this.temperature, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager.registerListener(this, this.luz, SensorManager.SENSOR_DELAY_NORMAL)
-
     }
 
     override fun onPause() {
         // Be sure to unregister the sensor when the activity pauses.
         super.onPause()
+        //PARA FUNCIONAR EM BACKGROUND BASTA REMOVER ESTA LINHA
         sensorManager.unregisterListener(this)
     }
 
@@ -205,7 +206,9 @@ class Menu : AppCompatActivity(), SensorEventListener {
 
         val ref = FirebaseDatabase.getInstance().getReference("Humidade")
 
+        //id que corresponde á ref
         val humidadeID = ref.push().key
+
         val humidade = CHumidade(humidity, currentDate,id!!)
 
 
@@ -271,8 +274,10 @@ class Menu : AppCompatActivity(), SensorEventListener {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch{
         try{
+            //Ocorre a request da notificação/ chama a interface notificationAPI
             val response = RetrofitInstance.api!!.postNotification(notification)
             if(response.isSuccessful){
                 Log.d(TAG, "Response: ${Gson().toJson(response)}")

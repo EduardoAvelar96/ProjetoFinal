@@ -44,7 +44,6 @@ class SignUp : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(username.text.toString(), password.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-
                         finish()
                     } else {
                         Toast.makeText(baseContext, R.string.register_error,

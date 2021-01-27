@@ -8,6 +8,7 @@ import ipvc.estg.projetofinal.CLuminosidade
 import ipvc.estg.projetofinal.R
 import kotlinx.android.synthetic.main.activity_recycler.view.*
 
+// Usado para adicionar dados na nossa recyclerview
 class AdapterLum(var list:ArrayList<CLuminosidade>) : RecyclerView.Adapter<AdapterLum.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
